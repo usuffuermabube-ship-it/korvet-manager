@@ -1,0 +1,23 @@
+{
+  "name": "korvet-manager",
+  "private": true,
+  "version": "1.2.0",
+  "scripts": {
+    "install:all": "npm install --prefix client && npm install --prefix server",
+    "dev": "concurrently \"npm run dev --prefix server\" \"npm run dev --prefix client\"",
+    "start": "npm run start --prefix server",
+    "build:web": "npm run build --prefix client",
+    "android:init": "npm install @capacitor/core @capacitor/cli @capacitor/android && npx cap add android",
+    "android:sync": "npm run build:web && npx cap sync android",
+    "android:open": "npx cap open android"
+  },
+  "devDependencies": {
+    "concurrently": "^9.1.0",
+    "typescript": "^6.0.3"
+  },
+  "dependencies": {
+    "@capacitor/android": "^8.3.4",
+    "@capacitor/cli": "^8.3.4",
+    "@capacitor/core": "^8.3.4"
+  }
+}

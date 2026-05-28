@@ -1,0 +1,474 @@
+:root {
+  color-scheme: dark;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Inter, Roboto, sans-serif;
+  background: #0e1621;
+  color: #e8eef7;
+}
+* { box-sizing: border-box; }
+body { margin: 0; }
+button, input { font: inherit; }
+button { cursor: pointer; border: 0; color: inherit; }
+.hidden { display: none; }
+
+.tgApp {
+  height: 100vh;
+  display: grid;
+  grid-template-columns: 340px minmax(0, 1fr) 360px;
+  background: #0e1621;
+  overflow: hidden;
+}
+
+.tgSidebar {
+  background: #17212b;
+  border-right: 1px solid #22303d;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+.tgSidebarTop {
+  padding: 14px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+.avatar, .headerAvatar, .chatAvatar {
+  width: 52px;
+  height: 52px;
+  border-radius: 999px;
+  background: linear-gradient(135deg, #2ea6ff, #2dd4bf);
+  display: grid;
+  place-items: center;
+  font-weight: 800;
+  color: white;
+}
+.tgSidebarTop h1 { margin: 0; font-size: 21px; }
+.tgSidebarTop p { margin: 2px 0 0; color: #7f91a4; font-size: 14px; }
+
+.searchBar {
+  margin: 6px 12px 12px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: #242f3d;
+  border-radius: 12px;
+  padding: 10px 12px;
+  color: #7f91a4;
+}
+.searchBar input {
+  min-width: 0;
+  flex: 1;
+  background: transparent;
+  border: 0;
+  outline: 0;
+  color: white;
+}
+
+.chatRow {
+  width: 100%;
+  background: transparent;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 11px 14px;
+  text-align: left;
+}
+.chatRow:hover, .chatRow.active { background: #2b5278; }
+.chatAvatar {
+  width: 48px;
+  height: 48px;
+  background: #3290d7;
+}
+.chatAvatar.muted { background: #334155; }
+.chatPreview { min-width: 0; flex: 1; display: grid; gap: 3px; }
+.chatPreview strong { font-size: 15px; }
+.chatPreview span { color: #aab8c5; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; font-size: 13px; }
+.chatRow small { color: #9fb6ca; }
+.sidebarFooter { margin-top: auto; padding: 12px; }
+.dangerBtn {
+  width: 100%;
+  background: #8b1e24;
+  border-radius: 12px;
+  padding: 12px;
+  display: inline-flex;
+  justify-content: center;
+  gap: 8px;
+}
+
+.tgMain {
+  position: relative;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  background:
+    radial-gradient(circle at 20% 10%, rgba(46,166,255,.12), transparent 26%),
+    radial-gradient(circle at 80% 90%, rgba(45,212,191,.10), transparent 24%),
+    #0e1621;
+}
+
+.tgHeader {
+  height: 58px;
+  background: #17212b;
+  border-bottom: 1px solid #22303d;
+  display: flex;
+  align-items: center;
+  padding: 0 10px;
+  gap: 8px;
+}
+.headerIdentity {
+  min-width: 0;
+  flex: 1;
+  background: transparent;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  text-align: left;
+}
+.headerIdentity span { display: block; color: #7f91a4; font-size: 13px; margin-top: 2px; }
+.headerAvatar {
+  width: 42px;
+  height: 42px;
+}
+.headerActions { display: flex; }
+.iconBtn {
+  background: transparent;
+  width: 42px;
+  height: 42px;
+  border-radius: 999px;
+  display: grid;
+  place-items: center;
+  color: #b6c2cf;
+}
+.iconBtn:hover { background: #243141; }
+
+.tgMessages {
+  flex: 1;
+  overflow: auto;
+  padding: 18px 18px 88px;
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+}
+.dateBadge {
+  align-self: center;
+  background: rgba(29, 45, 61, .86);
+  color: #c9d7e3;
+  border-radius: 999px;
+  font-size: 12px;
+  padding: 5px 11px;
+  margin-bottom: 8px;
+}
+.emptyChat {
+  margin: auto;
+  max-width: 360px;
+  padding: 28px;
+  border-radius: 22px;
+  background: rgba(23,33,43,.8);
+  text-align: center;
+  color: #aab8c5;
+}
+.emptyChat h2 { color: white; margin: 10px 0 6px; }
+
+.bubble {
+  max-width: min(72%, 560px);
+  align-self: flex-start;
+  background: #182533;
+  border-radius: 18px 18px 18px 5px;
+  padding: 8px 10px 6px;
+  text-align: left;
+  box-shadow: 0 2px 8px rgba(0,0,0,.16);
+}
+.bubble.mine {
+  align-self: flex-end;
+  background: #2b5278;
+  border-radius: 18px 18px 5px 18px;
+}
+.bubbleText { margin: 0 0 3px; line-height: 1.35; white-space: pre-wrap; }
+.bubbleTime {
+  float: right;
+  display: inline-flex;
+  align-items: center;
+  gap: 2px;
+  margin-left: 12px;
+  font-size: 11px;
+  color: rgba(225,235,245,.66);
+}
+.error { color: #fecaca; margin: 0; }
+.tgPhoto {
+  display: block;
+  max-width: min(360px, 100%);
+  max-height: 360px;
+  object-fit: cover;
+  border-radius: 14px;
+  margin: 2px 0 6px;
+}
+.realSticker {
+  background: transparent;
+  padding: 0;
+  margin: 2px 0 6px;
+}
+.realSticker img {
+  width: 148px;
+  height: 148px;
+  object-fit: cover;
+  border-radius: 22px;
+  display: block;
+  box-shadow: 0 3px 12px rgba(0,0,0,.25);
+}
+.stickerPlaceholder {
+  width: 148px;
+  height: 148px;
+  border-radius: 22px;
+  background: #243141;
+  display: grid;
+  place-items: center;
+  text-align: center;
+  color: #93a4b7;
+}
+
+.tgComposer {
+  position: absolute;
+  left: 12px;
+  right: 12px;
+  bottom: 12px;
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr) auto auto;
+  gap: 8px;
+  align-items: center;
+}
+.tgComposer input {
+  height: 48px;
+  border-radius: 24px;
+  border: 0;
+  outline: 0;
+  background: #17212b;
+  color: white;
+  padding: 0 18px;
+}
+.tgComposer button {
+  width: 48px;
+  height: 48px;
+  border-radius: 999px;
+  display: grid;
+  place-items: center;
+  background: #17212b;
+  color: #9fb1c2;
+}
+.tgComposer .sendRound {
+  background: #2ea6ff;
+  color: white;
+}
+
+.attachmentPreview {
+  position: absolute;
+  left: 14px;
+  right: 14px;
+  bottom: 72px;
+  background: rgba(23,33,43,.96);
+  border: 1px solid #243141;
+  border-radius: 16px;
+  padding: 10px;
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  align-items: center;
+}
+.attachmentPreview span {
+  background: #243141;
+  border-radius: 999px;
+  padding: 7px 10px;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 13px;
+}
+.attachmentPreview button {
+  margin-left: auto;
+  background: transparent;
+  color: #aab8c5;
+}
+
+.stickerDrawer {
+  position: absolute;
+  left: 12px;
+  right: 12px;
+  bottom: 72px;
+  max-height: 420px;
+  background: #17212b;
+  border: 1px solid #263747;
+  border-radius: 22px;
+  padding: 14px;
+  z-index: 10;
+  box-shadow: 0 20px 70px rgba(0,0,0,.45);
+}
+.drawerHead {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.drawerHead button { background: transparent; }
+.drawerInfo {
+  margin-top: 8px;
+  color: #9fb1c2;
+  font-size: 13px;
+  line-height: 1.35;
+}
+.drawerSearch { margin: 12px 0; }
+.importSticker {
+  width: 100%;
+  background: #2b5278;
+  border-radius: 14px;
+  padding: 12px;
+  display: inline-flex;
+  justify-content: center;
+  gap: 8px;
+}
+.photoStickerGrid {
+  margin-top: 12px;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(92px, 1fr));
+  gap: 10px;
+  max-height: 220px;
+  overflow: auto;
+}
+.photoStickerGrid button {
+  background: #0e1621;
+  border-radius: 16px;
+  padding: 7px;
+  display: grid;
+  gap: 6px;
+}
+.photoStickerGrid img, .placeholderSticker {
+  width: 100%;
+  aspect-ratio: 1;
+  object-fit: cover;
+  border-radius: 14px;
+}
+.placeholderSticker {
+  background: #243141;
+  display: grid;
+  place-items: center;
+  color: #8fa2b6;
+}
+.photoStickerGrid span {
+  color: #cbd8e4;
+  font-size: 11px;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+.infoPanel {
+  background: #17212b;
+  border-left: 1px solid #22303d;
+  overflow: auto;
+}
+.infoHead {
+  height: 58px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  border-bottom: 1px solid #22303d;
+  padding: 0 12px;
+}
+.privacyCard { padding: 16px; display: grid; gap: 14px; }
+.privacyCard label { color: #9fb1c2; }
+.privacyCard input {
+  border: 1px solid #2c4054;
+  background: #0e1621;
+  color: white;
+  border-radius: 12px;
+  padding: 12px;
+  outline: 0;
+}
+.settingBox {
+  border: 1px solid #263747;
+  background: #0e1621;
+  border-radius: 18px;
+  padding: 14px;
+}
+.settingTitle {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  color: #cbd8e4;
+  margin-bottom: 10px;
+}
+code {
+  display: block;
+  word-break: break-all;
+  background: #111c28;
+  color: #a7f3d0;
+  border-radius: 12px;
+  padding: 12px;
+  font-size: 12px;
+}
+.settingBox p { color: #9fb1c2; line-height: 1.4; font-size: 13px; }
+.settingsGrid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-top: 10px; }
+.settingsGrid button, .clearBtn {
+  background: #243141;
+  border-radius: 12px;
+  padding: 11px;
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  gap: 7px;
+}
+.clearBtn { width: 100%; background: #7f1d1d; }
+.cipherBox {
+  margin: 0 16px 16px;
+  border: 1px solid #263747;
+  background: #0e1621;
+  border-radius: 18px;
+  padding: 14px;
+}
+.cipherBox h3 { margin: 0 0 10px; }
+.cipherBox pre {
+  white-space: pre-wrap;
+  word-break: break-all;
+  max-height: 300px;
+  overflow: auto;
+  font-size: 12px;
+  color: #b8c7d5;
+}
+.cipherBox p { color: #8fa2b6; }
+
+.mobileOnly { display: none; }
+.backBtn {
+  background: #243141;
+  border-radius: 12px;
+  padding: 10px 12px;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+.settingsPage {
+  padding: 16px;
+  overflow: auto;
+}
+
+@media (max-width: 980px) {
+  .tgApp { grid-template-columns: 1fr; }
+  .tgSidebar {
+    position: fixed;
+    z-index: 30;
+    inset: 0 auto 0 0;
+    width: min(88vw, 360px);
+    transform: translateX(-100%);
+    transition: .18s ease;
+  }
+  .tgSidebar.open { transform: translateX(0); }
+  .infoPanel {
+    position: fixed;
+    z-index: 40;
+    inset: 0 0 0 auto;
+    width: min(92vw, 380px);
+    transform: translateX(100%);
+    transition: .18s ease;
+  }
+  .infoPanel.open { transform: translateX(0); }
+  .mobileOnly { display: grid; }
+  .tgHeader { padding-left: 6px; }
+  .tgMessages { padding-left: 10px; padding-right: 10px; }
+  .bubble { max-width: 86%; }
+  .realSticker img, .stickerPlaceholder { width: 132px; height: 132px; }
+}
